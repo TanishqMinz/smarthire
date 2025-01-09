@@ -13,20 +13,29 @@ export interface ConversationItemProps {
 
 export function ConversationItem({ name, message, time, isActive, isBot, isWhatsApp, isInstagram }: ConversationItemProps) {
   return (
-    <div className={`flex items-start p-2 rounded-lg ${isActive ? 'bg-accent' : 'hover:bg-accent/50'}`}>
-      <Avatar className="w-10 h-10 mr-3">
-        <AvatarImage src={`/avatars/${isBot ? 'bot.png' : '01.png'}`} alt={name} />
-        <AvatarFallback>{name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-      </Avatar>
-      <div className="flex-1 min-w-0">
-        <div className="flex justify-between items-baseline">
-          <h4 className="font-semibold text-sm truncate">{name}</h4>
-          <span className="text-xs text-muted-foreground">{time}</span>
+    <div className={`flex flex-col p-2 rounded-lg ${isActive ? 'bg-accent' : 'hover:bg-accent/50'}`}>
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-2">
+          <Avatar className="w-10 h-10">
+            <AvatarImage src={`/avatars/${isBot ? 'bot.png' : '01.png'}`} alt={name} />
+            <AvatarFallback>{name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="flex items-center gap-2">
+              <h4 className="font-semibold text-sm">{name}</h4>
+              {isWhatsApp && <Badge variant="secondary" className="h-5">WhatsApp</Badge>}
+              {isInstagram && <Badge variant="secondary" className="h-5">Instagram</Badge>}
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground truncate">{message}</p>
+        <span className="text-xs text-muted-foreground">{time}</span>
       </div>
-      {isWhatsApp && <Badge variant="secondary" className="ml-2">WhatsApp</Badge>}
-      {isInstagram && <Badge variant="secondary" className="ml-2">Instagram</Badge>}
+      <div className="flex justify-between items-start mt-1">
+        <p className="text-sm text-muted-foreground truncate flex-1">{message}</p>
+        <svg className="w-4 h-4 flex-shrink-0 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
     </div>
   )
 }
